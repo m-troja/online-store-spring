@@ -5,16 +5,27 @@ import java.util.List;
 import com.itbulls.learnit.onlinestore.persistence.dao.UserDao;
 import com.itbulls.learnit.onlinestore.persistence.dto.UserDto;
 
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class JpaUserDao implements UserDao {
-
+	
+	EntityManagerFactory emf = null;
+	EntityManager em = null;
+	
 	@Override
 	public boolean saveUser(UserDto user) {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			em.merge(user);
@@ -22,12 +33,26 @@ public class JpaUserDao implements UserDao {
 			em.getTransaction().commit();
 			return true;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public List<UserDto> getUsers() {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			List<UserDto> users = em.createQuery("SELECT u FROM user u", UserDto.class).getResultList();
@@ -35,12 +60,26 @@ public class JpaUserDao implements UserDao {
 			em.getTransaction().commit();
 			return users;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public UserDto getUserByEmail(String userEmail) {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			TypedQuery<UserDto> query = em.createQuery("SELECT u FROM user u WHERE u.email = :email", UserDto.class);
@@ -53,12 +92,26 @@ public class JpaUserDao implements UserDao {
 				return null;
 			}
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public UserDto getUserById(int id) {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			UserDto user = em.find(UserDto.class, id);
@@ -66,12 +119,26 @@ public class JpaUserDao implements UserDao {
 			em.getTransaction().commit();
 			return user;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public UserDto getUserByPartnerCode(String partnerCode) {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			System.out.println(partnerCode);
 			TypedQuery<UserDto> query = em.createQuery("SELECT u FROM user u WHERE u.partnerCode = :partnerCode", UserDto.class);
@@ -86,24 +153,52 @@ public class JpaUserDao implements UserDao {
 			}
 			
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public void updateUser(UserDto newUser) {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			em.merge(newUser);
 			
 			em.getTransaction().commit();
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public List<UserDto> getReferralsByUserId(int id) {
-		try (var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager()) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			TypedQuery<UserDto> query = em.createQuery("SELECT u FROM user u WHERE u.referrerUser.id = :id", UserDto.class);
@@ -112,6 +207,18 @@ public class JpaUserDao implements UserDao {
 			List<UserDto> users = query.getResultList();
 			em.getTransaction().commit();
 			return users;
+		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
 		}
 	}
 

@@ -5,21 +5,23 @@
     <parent>
         <groupId>com.itbulls.learnit</groupId>
 		<artifactId>online-store</artifactId>
-        <version>${project.version}</version>
+        <version>1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.learnit.itbulls</groupId>
     <artifactId>online-store.core</artifactId>
-    <version>${project.version}</version>
+    <version>1</version>
     <packaging>jar</packaging>
+    
 	
     <dependencies>
         <dependency>
             <groupId>com.learnit.itbulls</groupId>
             <artifactId>online-store.persistence</artifactId>
-            <version>${project.version}</version>
+            <version>1</version>
         </dependency>
+        
     </dependencies>
 
 </project>

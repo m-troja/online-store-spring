@@ -8,31 +8,56 @@ import com.itbulls.learnit.onlinestore.persistence.dto.PurchaseDto;
 import com.itbulls.learnit.onlinestore.persistence.dto.PurchaseStatusDto;
 import com.itbulls.learnit.onlinestore.persistence.dto.UserDto;
 
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class JpaPurchaseDao implements PurchaseDao {
 
+	EntityManagerFactory emf = null;
+	EntityManager em = null;
+	
 	@Override
 	public void savePurchase(PurchaseDto order) {
-		try(var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager();) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
+			
 			em.getTransaction().begin();
 			
 			em.persist(order);
 			
 			em.getTransaction().commit();
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public List<PurchaseDto> getPurchasesByUserId(int userId) {
-		try(var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager();) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			TypedQuery<PurchaseDto> query = em.createQuery("SELECT p FROM purchase p WHERE p.userDto.id = :id", PurchaseDto.class);
@@ -43,12 +68,26 @@ public class JpaPurchaseDao implements PurchaseDao {
 			
 			return resultList;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public List<PurchaseDto> getPurchases() {
-		try(var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager();) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			TypedQuery<PurchaseDto> query = em.createQuery("SELECT p FROM purchase p", PurchaseDto.class);
@@ -58,12 +97,26 @@ public class JpaPurchaseDao implements PurchaseDao {
 			
 			return resultList;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public List<PurchaseDto> getNotCompletedPurchases(Integer lastFulfilmentStageId) {
-		try(var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager();) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			Query query = em.createQuery("SELECT p.id, p.userDto, p.purchaseStatusDto FROM purchase p WHERE p.purchaseStatusDto.id != :statusId");
@@ -82,12 +135,26 @@ public class JpaPurchaseDao implements PurchaseDao {
 			
 			return purchases;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public PurchaseDto getPurchaseById(Integer purchaseId) {
-		try(var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager();) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			
 			CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
@@ -102,15 +169,41 @@ public class JpaPurchaseDao implements PurchaseDao {
 			
 			return purchase;
 		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
+		}
 	}
 
 	@Override
 	public void updatePurchase(PurchaseDto newPurchase) {
-		try(var emf = Persistence.createEntityManagerFactory("persistence-unit");
-				var em = emf.createEntityManager();) {
+		try 
+		{ 	 
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
 			em.getTransaction().begin();
 			em.merge(newPurchase);
 			em.getTransaction().commit();
+		}
+		finally 
+		{
+			if (emf !=null )
+			{
+				emf.close();
+			}
+			
+			if (em !=null )
+			{
+				em.close();
+			}
 		}
 	}
 

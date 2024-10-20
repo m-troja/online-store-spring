@@ -3,14 +3,23 @@ package com.itbulls.learnit.onlinestore.persistence.dto.converters;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.itbulls.learnit.onlinestore.persistence.dto.PurchaseDto;
 import com.itbulls.learnit.onlinestore.persistence.entities.Purchase;
 import com.itbulls.learnit.onlinestore.persistence.entities.impl.DefaultPurchase;
 
+@Service
 public class PurchaseDtoToPurchaseConverter {
 	
+	@Autowired
 	private ProductDtoToProductConverter productConverter = new ProductDtoToProductConverter();
+	
+	@Autowired
 	private UserDtoToUserConverter userConverter = new UserDtoToUserConverter();
+	
+	@Autowired
 	private PurchaseStatusDtoToPurchaseStatusConverter purchaseStatusConverter = new PurchaseStatusDtoToPurchaseStatusConverter();
 	
 	public Purchase convertPurchaseDtoToPurchase(PurchaseDto purchaseDto) {

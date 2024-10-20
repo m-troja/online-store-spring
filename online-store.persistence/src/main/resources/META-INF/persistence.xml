@@ -4,18 +4,18 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
-			<property name="jakarta.persistence.jdbc.driver"
+			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
-			<property name="jakarta.persistence.jdbc.url"
+			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://127.0.0.1:3306/dev" />
-			<property name="jakarta.persistence.jdbc.user" value="michal" />
-			<property name="jakarta.persistence.jdbc.password"
+			<property name="javax.persistence.jdbc.user" value="michal" />
+			<property name="javax.persistence.jdbc.password"
 				value="michal" />
 			<property
-				name="jakarta.persistence.schema-generation.database.action"
+				name="javax.persistence.schema-generation.database.action"
 				value="update" />
 			<property name="hibernate.dialect"
-				value="org.hibernate.dialect.MySQLDialect" />
+				value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="hibernate.show_sql" value="true" />
 
 			<property name="hibernate.c3p0.min_size" value="5" />

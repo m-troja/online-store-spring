@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.itbulls.learnit.onlinestore.core.CoreConfigurations;
 import com.itbulls.learnit.onlinestore.core.facades.PurchaseFacade;
 import com.itbulls.learnit.onlinestore.core.facades.UserFacade;
@@ -17,21 +20,18 @@ import com.itbulls.learnit.onlinestore.persistence.entities.User;
 import com.itbulls.learnit.onlinestore.persistence.entities.impl.DefaultPurchase;
 import com.itbulls.learnit.onlinestore.persistence.entities.impl.DefaultPurchaseStatus;
 
+@Service
 public class DefaultPurchaseFacade implements PurchaseFacade {
 	
-	private static DefaultPurchaseFacade instance;
+	@Autowired
 	private PurchaseDao purchaseDao = new JpaPurchaseDao();
-	private PurchaseDtoToPurchaseConverter purchaseConverter = new PurchaseDtoToPurchaseConverter();
-	private UserFacade userFacade = DefaultUserFacade.getInstance();
 	
-	public static synchronized DefaultPurchaseFacade getInstance() {
-		if (instance == null) {
-			instance = new DefaultPurchaseFacade();
-		}
-		
-		return instance;
-	}
-
+	@Autowired
+	private PurchaseDtoToPurchaseConverter purchaseConverter;
+	
+	@Autowired
+	private UserFacade userFacade;
+	
 	@Override
 	public void createPurchase(User user, Product product) {
 		Purchase purchase = new DefaultPurchase();
