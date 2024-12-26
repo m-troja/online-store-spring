@@ -1,7 +1,9 @@
 package com.itbulls.learnit.onlinestore.persistence.entities.impl;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.itbulls.learnit.onlinestore.persistence.entities.Role;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
 
 public class UserForHashTables implements User {
@@ -175,6 +177,30 @@ public class UserForHashTables implements User {
 	@Override
 	public User getReferrerUser() {
 		return this.referrerUser;
+	}
+
+	@Override
+	public void setRoles(List<Role> convertRoleDtosToRoles) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Role> getRoles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setIsEnabled(boolean isEnabled) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

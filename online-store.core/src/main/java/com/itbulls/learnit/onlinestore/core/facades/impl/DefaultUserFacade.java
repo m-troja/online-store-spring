@@ -1,7 +1,5 @@
 package com.itbulls.learnit.onlinestore.core.facades.impl;
 
-import static com.itbulls.learnit.onlinestore.persistence.dto.RoleDto.CUSTOMER_ROLE_NAME;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.itbulls.learnit.onlinestore.core.facades.UserFacade;
 import com.itbulls.learnit.onlinestore.core.services.AffiliateMarketingService;
 import com.itbulls.learnit.onlinestore.core.services.impl.DefaultAffiliateMarketingService;
+import com.itbulls.learnit.onlinestore.persistence.SetupDataLoader;
 import com.itbulls.learnit.onlinestore.persistence.dao.UserDao;
 import com.itbulls.learnit.onlinestore.persistence.dao.impl.JpaUserDao;
 import com.itbulls.learnit.onlinestore.persistence.dto.converters.UserDtoToUserConverter;
@@ -29,7 +28,7 @@ public class DefaultUserFacade implements UserFacade {
 	
 	@Override
 	public void registerUser(User user, String referrerCode) {
-		user.setRoleName(CUSTOMER_ROLE_NAME);
+		user.setRoleName(SetupDataLoader.ROLE_CUSTOMER);
 		user.setPartnerCode(marketingService.generateUniquePartnerCode());
 		user.setReferrerUser(userConverter.convertUserDtoToUser(userDao.getUserByPartnerCode(referrerCode)));
 		userDao.saveUser(userConverter.convertUserToUserDto(user));

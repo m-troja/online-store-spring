@@ -14,6 +14,8 @@
 	
 	<properties>
 		<spring.version>5.3.23</spring.version>
+		<spring.security.version>5.8.1</spring.security.version>
+
 	</properties>
 
 
@@ -62,6 +64,25 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+			
+
 	</dependencies>
 
 	<build>

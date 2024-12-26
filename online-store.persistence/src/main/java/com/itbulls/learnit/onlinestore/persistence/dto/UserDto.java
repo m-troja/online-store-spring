@@ -3,13 +3,19 @@ package com.itbulls.learnit.onlinestore.persistence.dto;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.itbulls.learnit.onlinestore.persistence.entities.Role;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity(name = "user")
 public class UserDto {
@@ -47,6 +53,15 @@ public class UserDto {
 	@JoinColumn(name = "referrer_user_id")
 	private UserDto referrerUser;
 	
+	@Column(name = "enabled")
+	private boolean isEnabled;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles", 
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<RoleDto> roles;
+
 	public Integer getId() {
 		return id;
 	}
@@ -113,7 +128,19 @@ public class UserDto {
 				+ ", roleDto=" + roleDto + ", money=" + money + ", creditCard=" + creditCard + ", password=" + password
 				+ ", partnerCode=" + partnerCode + ", referrerUser=" + referrerUser + "]";
 	}
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+	public void setIsEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	public List<RoleDto> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<RoleDto> roles) {
+		this.roles = roles;
+	}
 	
-	
+
 	
 }

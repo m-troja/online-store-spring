@@ -1,5 +1,8 @@
 package com.itbulls.learnit.onlinestore.persistence.entities.impl;
 
+import java.util.List;
+
+import com.itbulls.learnit.onlinestore.persistence.entities.Role;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
 import com.itbulls.learnit.onlinestore.persistence.utils.validation.Validate;
 
@@ -28,6 +31,9 @@ public class DefaultUser implements User {
 
 	private String repeatPassword;
 	
+	private List<Role> roles;
+	
+	private boolean isEnabled;
 
 	private User referrerUser;
 
@@ -186,5 +192,23 @@ public class DefaultUser implements User {
 	public void setRepeatPassword(String repeatPassword) {
 		this.repeatPassword = repeatPassword;
 	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+
 
 }
