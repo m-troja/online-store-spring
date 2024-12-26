@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
 <!DOCTYPE html>
 <html lang="en">
    <head>

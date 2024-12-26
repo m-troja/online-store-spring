@@ -13,7 +13,8 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class MainWebAppInitializer implements WebApplicationInitializer {
 
 	@Override
-	public void onStartup(final ServletContext sc) throws ServletException {
+	public void onStartup(final ServletContext sc) throws ServletException 
+	{
 		var ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(WebConfig.class);
 		sc.addListener(new ContextLoaderListener(ctx));

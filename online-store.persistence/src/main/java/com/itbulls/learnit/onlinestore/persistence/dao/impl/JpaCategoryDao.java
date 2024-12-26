@@ -2,6 +2,8 @@ package com.itbulls.learnit.onlinestore.persistence.dao.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.itbulls.learnit.onlinestore.persistence.dao.CategoryDao;
@@ -14,7 +16,7 @@ import javax.persistence.Persistence;
 @Repository
 public class JpaCategoryDao implements CategoryDao 
 {
-
+	public final Logger LOGGER = LogManager.getLogger(JpaCategoryDao.class);
 	EntityManagerFactory emf = null;
 	EntityManager em = null;
 	
@@ -28,6 +30,7 @@ public class JpaCategoryDao implements CategoryDao
 			em.getTransaction().begin();
 			
 			CategoryDto category = em.find(CategoryDto.class, id);
+			LOGGER.info("JpaCategoryDao get category by id " + id);
 			em.getTransaction().commit();
 			return category;
 		}
@@ -56,6 +59,7 @@ public class JpaCategoryDao implements CategoryDao
 			var em = emf.createEntityManager();
 			em.getTransaction().begin();
 			List<CategoryDto> categories = em.createQuery("SELECT c FROM category c", CategoryDto.class).getResultList();
+			LOGGER.info("Get categories SELECT c FROM category c");
 			em.getTransaction().commit();
 			return categories;
 		}

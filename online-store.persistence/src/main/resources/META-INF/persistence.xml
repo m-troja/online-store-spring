@@ -7,7 +7,7 @@
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://127.0.0.1:3306/dev" />
+				value="jdbc:mysql://127.0.0.1:3306/learn_it_db" />
 			<property name="javax.persistence.jdbc.user" value="michal" />
 			<property name="javax.persistence.jdbc.password"
 				value="michal" />
@@ -15,7 +15,8 @@
 				name="javax.persistence.schema-generation.database.action"
 				value="update" />
 			<property name="hibernate.dialect"
-				value="org.hibernate.dialect.MySQL5Dialect" />
+				value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="spring.jpa.properties.hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.show_sql" value="true" />
 
 			<property name="hibernate.c3p0.min_size" value="5" />

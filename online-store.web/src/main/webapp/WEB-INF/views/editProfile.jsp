@@ -1,5 +1,10 @@
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +42,7 @@
 						<span class="focus-input100" data-placeholder="Email"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Enter old password">
+					<div class="wrap-input100 validate-input" data-validate="Enter current password">
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>

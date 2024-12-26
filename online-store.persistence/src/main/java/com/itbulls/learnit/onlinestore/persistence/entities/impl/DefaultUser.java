@@ -26,6 +26,9 @@ public class DefaultUser implements User {
 
 	private String partnerCode;
 
+	private String repeatPassword;
+	
+
 	private User referrerUser;
 
 	{
@@ -176,5 +179,12 @@ public class DefaultUser implements User {
 	public User getReferrerUser() {
 		return this.referrerUser;
 	}
-	
+
+	public Object getRepeatPassword() {
+		return repeatPassword;
+	}
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
+	}
+
 }

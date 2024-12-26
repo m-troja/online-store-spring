@@ -1,5 +1,7 @@
 package com.itbulls.learnit.onlinestore.persistence.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.itbulls.learnit.onlinestore.persistence.dao.RoleDao;
@@ -13,7 +15,7 @@ import javax.persistence.TypedQuery;
 
 @Repository
 public class JpaJdbcRoleDao implements RoleDao {
-	
+	public final Logger LOGGER = LogManager.getLogger(JpaJdbcRoleDao.class);
 
 	EntityManagerFactory emf = null;
 	EntityManager em = null;
@@ -28,7 +30,7 @@ public class JpaJdbcRoleDao implements RoleDao {
 			em.getTransaction().begin();
 			
 			RoleDto role = em.find(RoleDto.class, id);
-			
+			LOGGER.info("JpaJdbcRoleDao getRoleById " + id);
 			em.getTransaction().commit();
 			
 			return role;
@@ -59,7 +61,7 @@ public class JpaJdbcRoleDao implements RoleDao {
 			
 			TypedQuery<RoleDto> query = em.createQuery("SELECT r FROM role r WHERE r.name = :roleName", RoleDto.class);
 			query.setParameter("roleName", roleName);
-			
+			LOGGER.info("SELECT r FROM role r WHERE r.name = " + roleName);
 			RoleDto role = query.getSingleResult();
 			
 			em.getTransaction().commit();

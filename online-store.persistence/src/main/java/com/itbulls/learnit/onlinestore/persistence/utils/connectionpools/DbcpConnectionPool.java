@@ -15,7 +15,7 @@ public class DbcpConnectionPool {
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		ds.setUrl("jdbc:mysql://localhost:3306/dev");
+		ds.setUrl("jdbc:mysql://localhost:3306/learn_it_db");
 		ds.setUsername("michal");
 		ds.setPassword("michal");
 		ds.setMinIdle(3);

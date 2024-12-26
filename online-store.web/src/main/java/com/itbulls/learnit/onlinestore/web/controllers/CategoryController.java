@@ -47,7 +47,7 @@ public class CategoryController extends HttpServlet {
 		model.addAttribute("activePage", page);
 		model.addAttribute("categoryId", categoryId);
 		
-		return "category";
+		return "plp";
 	}
 
 }

@@ -3,6 +3,7 @@
 
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
+
 <header id="header" class="top-head">
 	<!-- Static navbar -->
 	<nav class="navbar navbar-default">
@@ -52,8 +53,8 @@
 									<li><a data-toggle="modal" data-target="#myModal" href="#">
 											<span><fmt:message key="change.lang.lbl" bundle="${rb}"/> </span> 
 											<c:choose>
-												<c:when test="${locale == 'fr'}">
-													<img src="images/flag-fr.png" alt="" />
+												<c:when test="${locale == 'pl'}">
+													<img src="images/flaga-polska.png" alt="" />
 												</c:when>
 												<c:otherwise>
 													<img src="images/flag.png" alt="" />
@@ -91,8 +92,8 @@
 				<ul>
 					<li><a href="change-locale"><img src="images/flag-up-1.png" alt="" />
 							United States</a></li>
-					<li><a href="change-locale?locale=fr"><img src="images/flag-up-2.png" alt="" />
-							France </a></li>
+					<li><a href="change-locale?locale=pl"><img src="images/flaga-polska.png" alt="" />
+							Polska </a></li>
 				</ul>
 			</div>
 

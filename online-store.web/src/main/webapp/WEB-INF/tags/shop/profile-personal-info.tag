@@ -33,12 +33,7 @@
 					<td><b>Partner Link (Use this link to invite referrals):</b></td>
 					<td><a href="${partnerLink}">${partnerLink}</a></td>
 				</tr>
-				
-				
 			</table>
-			
 		</div>
-
 	</div>
-
 </div>

@@ -12,10 +12,13 @@ import javax.persistence.Query;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class JpaUserDao implements UserDao {
+	public final Logger LOGGER = LogManager.getLogger(JpaUserDao.class);
 	
 	EntityManagerFactory emf = null;
 	EntityManager em = null;
@@ -27,7 +30,7 @@ public class JpaUserDao implements UserDao {
 			emf = Persistence.createEntityManagerFactory("persistence-unit");
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
-			
+			LOGGER.info("User merged");
 			em.merge(user);
 			
 			em.getTransaction().commit();
@@ -56,7 +59,7 @@ public class JpaUserDao implements UserDao {
 			em.getTransaction().begin();
 			
 			List<UserDto> users = em.createQuery("SELECT u FROM user u", UserDto.class).getResultList();
-			
+			LOGGER.info("SELECT u FROM user u");
 			em.getTransaction().commit();
 			return users;
 		}
@@ -84,6 +87,7 @@ public class JpaUserDao implements UserDao {
 			
 			TypedQuery<UserDto> query = em.createQuery("SELECT u FROM user u WHERE u.email = :email", UserDto.class);
 			query.setParameter("email", userEmail);
+			LOGGER.info("SELECT u FROM user u WHERE u.email = " + userEmail);
 			try {
 				UserDto user = query.getSingleResult();
 				em.getTransaction().commit();
@@ -115,7 +119,7 @@ public class JpaUserDao implements UserDao {
 			em.getTransaction().begin();
 			
 			UserDto user = em.find(UserDto.class, id);
-			
+			LOGGER.info("SELECT u FROM user u WHERE u.id = " + id);
 			em.getTransaction().commit();
 			return user;
 		}
@@ -143,6 +147,8 @@ public class JpaUserDao implements UserDao {
 			System.out.println(partnerCode);
 			TypedQuery<UserDto> query = em.createQuery("SELECT u FROM user u WHERE u.partnerCode = :partnerCode", UserDto.class);
 			query.setParameter("partnerCode", partnerCode);
+			
+			LOGGER.info("SELECT u FROM user u WHERE u.partnerCode =  " + partnerCode);
 			
 			try {
 				UserDto user = query.getSingleResult();
@@ -176,7 +182,7 @@ public class JpaUserDao implements UserDao {
 			em.getTransaction().begin();
 			
 			em.merge(newUser);
-			
+			LOGGER.info("Merge " + newUser.toString());
 			em.getTransaction().commit();
 		}
 		finally 
@@ -203,7 +209,7 @@ public class JpaUserDao implements UserDao {
 			
 			TypedQuery<UserDto> query = em.createQuery("SELECT u FROM user u WHERE u.referrerUser.id = :id", UserDto.class);
 			query.setParameter("id", id);
-			
+			LOGGER.info("SELECT u FROM user u WHERE u.referrerUser.id = " + id);
 			List<UserDto> users = query.getResultList();
 			em.getTransaction().commit();
 			return users;

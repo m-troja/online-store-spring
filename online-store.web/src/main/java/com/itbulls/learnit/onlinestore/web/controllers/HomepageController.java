@@ -19,21 +19,22 @@ import com.itbulls.learnit.onlinestore.core.facades.CategoryFacade;
 import com.itbulls.learnit.onlinestore.core.facades.impl.DefaultCategoryFacade;
 import com.itbulls.learnit.onlinestore.persistence.entities.Category;
 import com.itbulls.learnit.onlinestore.web.Configurations;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Controller
 public class HomepageController  {
 
+	public final Logger logger =  LogManager.getLogger(HomepageController.class);
+	
 	@Autowired
 	private CategoryFacade categoryFacade;
 
 	@GetMapping(value = {"/homepage", "/"})
 	public String doGet(Model model)
 	{	
-		System.out.println("/Homepage: GET");
 		List<Category> categories = categoryFacade.getCategories();
 		model.addAttribute("categories", categories);
 		return "homepage";
 	}
-	
-
 }

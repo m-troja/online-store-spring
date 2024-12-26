@@ -46,6 +46,7 @@ public class UserDto {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "referrer_user_id")
 	private UserDto referrerUser;
+	
 	public Integer getId() {
 		return id;
 	}

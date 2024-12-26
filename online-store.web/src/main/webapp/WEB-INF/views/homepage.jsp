@@ -1,5 +1,11 @@
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
 <!DOCTYPE html>
+
 <html lang="en">
    <head>
       <meta charset="UTF-8">
@@ -21,9 +27,8 @@
                   <div class="panel panel-default">
                      <div class="panel-body">
                         <img src="images/xpann-icon.jpg" class="icon-small" alt="">
-                        <h4>Chamb Your Business</h4>
-                        <p>Grow easily with chamb. Create free account.
-                           We help expanding your business easily.
+                        <h4><fmt:message key="homepage.text1" bundle="${rb}"/></h4>
+                        <p><fmt:message key="homepage.text2" bundle="${rb}"/>
                         </p>
                      </div>
                   </div>
@@ -32,9 +37,8 @@
                   <div class="panel panel-default">
                      <div class="panel-body">
                         <img src="images/create-icon.jpg" class="icon-small" alt="">
-                        <h4>Create and add</h4>
-                        <p>Grow easily with chamb. Create free account.
-                           We help expanding your business easily.
+                        <h4><fmt:message key="homepage.text3" bundle="${rb}"/></h4>
+                        <p><fmt:message key="homepage.text4" bundle="${rb}"/>
                         </p>
                      </div>
                   </div>

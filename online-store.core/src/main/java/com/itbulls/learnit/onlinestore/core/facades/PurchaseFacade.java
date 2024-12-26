@@ -2,6 +2,8 @@ package com.itbulls.learnit.onlinestore.core.facades;
 
 import java.util.List;
 
+import com.itbulls.learnit.onlinestore.persistence.dto.ProductDto;
+import com.itbulls.learnit.onlinestore.persistence.dto.UserDto;
 import com.itbulls.learnit.onlinestore.persistence.entities.Product;
 import com.itbulls.learnit.onlinestore.persistence.entities.Purchase;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
@@ -15,5 +17,7 @@ public interface PurchaseFacade {
 	List<Purchase> getNotCompletedPurchases();
 
 	void markFulfilmentStageForPurchaseIdAsCompleted(Integer purchaseId);
+
+	boolean hasUserPurchasedThisProduct(Product product, User user);
 
 }

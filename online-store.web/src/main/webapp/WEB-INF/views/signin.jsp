@@ -1,5 +1,11 @@
 <%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +27,7 @@
 				<c:if test="${UNSUCCESSFUL_LOGIN_COUNT == null || UNSUCCESSFUL_LOGIN_COUNT < 3}">
 					<form class="login100-form validate-form" action="signin" method="POST">
 						<span class="login100-form-title p-b-26">
-							Welcome
+							<fmt:message key="signin.welcome" bundle="${rb}"/>
 						</span>
 	
 						<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
@@ -41,18 +47,18 @@
 							<div class="wrap-login100-form-btn">
 								<div class="login100-form-bgbtn"></div>
 								<button class="login100-form-btn">
-									Sign In
+							<fmt:message key="signin.button" bundle="${rb}"/>
 								</button>
 							</div>
 						</div>
 	
 						<div class="text-center p-t-115">
 							<span class="txt1">
-								Don't have an account?
+							<fmt:message key="signin.donthave" bundle="${rb}"/>
 							</span>
 	
 							<a class="txt2" href="signup">
-								Sign Up
+							<fmt:message key="signin.signup" bundle="${rb}"/>
 							</a>
 						</div>
 					</form>

@@ -12,7 +12,7 @@ public class RoleDto {
 	public static final String ADMIN_ROLE_NAME = "ROLE_ADMIN";
 	public static final String MANAGER_ROLE_NAME = "ROLE_MANAGER";
 	public static final String CUSTOMER_ROLE_NAME = "ROLE_CUSTOMER";
-	public String LOGGED_IN_USER_ATTR = "loggedInUser";
+//	public String LOGGED_IN_USER_ATTR = "loggedInUser";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -45,6 +45,7 @@ public class UserDtoToUserConverter {
 	}
 	
 	public UserDto convertUserToUserDto(User user) {
+		roleConverter = new RoleDtoToRoleConverter();
 		UserDto userDto = null;
 		if (user != null) {
 			userDto = new UserDto();

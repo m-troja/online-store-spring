@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
     <Appenders>
+     <!--
         # Console appender
         <Console name="stdout" target="SYSTEM_OUT">
             # Pattern of log message for console appender
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
         </Console>
-
+-->
         # File appender
-        <File name="fout" fileName="log4j/log4j2-example.log"
-            immediateFlush="false" append="false">
+        <File name="fout" fileName="C:/tmp/log/tore.log"
+            immediateFlush="false" append="true">
             # Pattern of log message for file appender
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
         </File>
-
+  <!--
         # Rolling appender
         <RollingFile name="roll-by-size"
-            fileName="log4j/roll-by-size/app.log" filePattern="log4j/roll-by-size/app.%i.log"
+            fileName="C:\tmp\log\aapp.log" filePattern="aaa.%i.log"
             ignoreExceptions="false">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
@@ -24,10 +25,11 @@
             <Policies>
                 <OnStartupTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy
-                    size="5 KB"/>
+                    size="5555 KB"/>
             </Policies>
         </RollingFile>
-
+-->
+ <!--
         <RollingFile name="roll-by-time"
             fileName="log4j/roll-by-time/app.log"
             filePattern="log4j/roll-by-time/app.%d{MM-dd-yyyy-HH-mm}.log.gz"
@@ -37,7 +39,8 @@
             </PatternLayout>
             <TimedTriggeringPolicy/>
         </RollingFile>
-
+-->
+<!--  
         <RollingFile name="roll-by-time-and-size"
             fileName="log4j/roll-by-time-and-size/app.log"
             filePattern="log4j/roll-by-time-and-size/app.%d{MM-dd-yyyy-HH-mm}.%i.log.gz"
@@ -59,6 +62,7 @@
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
+        -->
     </Appenders>
 
     <!--  <Loggers>

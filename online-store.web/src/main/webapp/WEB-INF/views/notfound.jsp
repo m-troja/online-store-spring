@@ -1,6 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="shop" tagdir="/WEB-INF/tags/shop"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="OnlineShopResourceBundle" var="rb"/>
 <html lang="en">
 
 <head>
@@ -21,7 +25,7 @@
 				<h1>Oops!</h1>
 				<h2>404 - The Page can't be found</h2>
 			</div>
-			<a href="homepage">Go TO Homepage</a>
+			<a href="http://localhost:8080/online-store.web/homepage">Go TO Homepage</a>
 		</div>
 	</div>
 

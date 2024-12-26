@@ -10,16 +10,22 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
         </Console>
 
-
+   # File appender
+        <File name="fout" fileName="C:/tmp/log/app.log"
+            immediateFlush="false" append="true">
+            # Pattern of log message for file appender
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
+        </File>
+        
         <RollingFile name="rolling-file-appender"
             fileName="${basePath}/app.log"
             filePattern="${basePath}/app.%i.log"
-            ignoreExceptions="false">
+            ignoreExceptions="true">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10 KB"/>
+                <SizeBasedTriggeringPolicy size="11150 KB"/>
             </Policies>
             <DefaultRolloverStrategy max="2"/>
         </RollingFile>
