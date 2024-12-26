@@ -15,6 +15,8 @@ import com.itbulls.learnit.onlinestore.persistence.dao.UserDao;
 import com.itbulls.learnit.onlinestore.persistence.dto.PrivilegeDto;
 import com.itbulls.learnit.onlinestore.persistence.dto.RoleDto;
 import com.itbulls.learnit.onlinestore.persistence.dto.UserDto;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent>
 {
@@ -36,7 +38,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 	@Autowired
 	private PrivilegeDao privilegeRepository;
 	
-//	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
 	@Transactional
