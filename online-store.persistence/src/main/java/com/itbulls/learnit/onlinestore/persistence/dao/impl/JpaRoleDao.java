@@ -14,8 +14,8 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 @Repository
-public class JpaJdbcRoleDao implements RoleDao {
-	public final Logger LOGGER = LogManager.getLogger(JpaJdbcRoleDao.class);
+public class JpaRoleDao implements RoleDao {
+	public final Logger LOGGER = LogManager.getLogger(JpaRoleDao.class);
 
 	EntityManagerFactory emf = null;
 	EntityManager em = null;
@@ -82,6 +82,15 @@ public class JpaJdbcRoleDao implements RoleDao {
 			}
 		}
 		
+	}
+	
+	public void save(RoleDto role)
+	{
+		emf = Persistence.createEntityManagerFactory("persistence-unit");
+		em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(role);
+		em.getTransaction().commit();
 	}
 }
 
