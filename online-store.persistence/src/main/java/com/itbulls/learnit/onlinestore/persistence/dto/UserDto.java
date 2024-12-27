@@ -1,4 +1,4 @@
-package com.itbulls.learnit.onlinestore.persistence.dto;
+ package com.itbulls.learnit.onlinestore.persistence.dto;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,10 +32,6 @@ public class UserDto {
 	
 	@Column(name = "email", unique = true)
 	private String email;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_user_role")
-	private RoleDto roleDto;
 	
 	@Column(name = "money")
 	private BigDecimal money;
@@ -86,12 +82,7 @@ public class UserDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public RoleDto getRoleDto() {
-		return roleDto;
-	}
-	public void setRoleDto(RoleDto roleDto) {
-		this.roleDto = roleDto;
-	}
+
 	public BigDecimal getMoney() {
 		return money;
 	}
@@ -125,7 +116,7 @@ public class UserDto {
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", roleDto=" + roleDto + ", money=" + money + ", creditCard=" + creditCard + ", password=" + password
+				+  ", money=" + money + ", creditCard=" + creditCard + ", password=" + password
 				+ ", partnerCode=" + partnerCode + ", referrerUser=" + referrerUser + "]";
 	}
 	public boolean isEnabled() {

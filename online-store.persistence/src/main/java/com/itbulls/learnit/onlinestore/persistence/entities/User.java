@@ -32,12 +32,12 @@ public interface User {
 	String getPartnerCode();
 	void setPartnerCode(String partnerCode);
 	
-	void setReferrerUser(User convertUserDtoToUser);
+	void setReferrerUser(User user);
 	User getReferrerUser();
 	
-	void setRoles(List<Role> convertRoleDtosToRoles);
+	void setRoles(List<Role> roles);
 	List<Role> getRoles();
 	boolean isEnabled();
-	void setIsEnabled(boolean isEnabled);
+	void setIsEnabled(boolean enabled);
 
 }

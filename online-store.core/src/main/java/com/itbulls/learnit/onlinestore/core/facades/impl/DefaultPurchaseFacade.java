@@ -39,7 +39,6 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
 	@Autowired
 	private UserFacade userFacade;
 	
-	Logger LOGGER = LogManager.getLogger(DefaultPurchaseFacade.class);
 	
 	@Override
 	public void createPurchase(User user, Product product) {
@@ -81,26 +80,26 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
 	@Override
 	public boolean hasUserPurchasedThisProduct(Product product, User user)
 	{
-		//Define converters
-		ProductDtoToProductConverter productCnv = new ProductDtoToProductConverter();
-		UserDtoToUserConverter userCnv = new UserDtoToUserConverter();
-		
-		//Get all productsDto user purchased
-		List<ProductDto> productsDtoUserPurchased =  purchaseDao.productsUserPurchased(userCnv.convertUserToUserDto(user));
-		
-		//Convert productDtos to products
-		List<Product>    productsUserPurchased =  new ArrayList<>();
-		productsUserPurchased = productCnv.convertProductDtosToProducts(productsDtoUserPurchased);
-		
-		for ( Product productInArray : productsUserPurchased)
-		{
-			 if (productInArray.getId() == product.getId())
-			 {
-				 LOGGER.info("hasUserPurchasedThisProduct true");
-				 return true;
-			 }
-		}
-		LOGGER.info("hasUserPurchasedThisProduct false");
+//		//Define converters
+//		ProductDtoToProductConverter productCnv = new ProductDtoToProductConverter();
+//		UserDtoToUserConverter userCnv = new UserDtoToUserConverter();
+//		
+//		//Get all productsDto user purchased
+//		List<ProductDto> productsDtoUserPurchased =  purchaseDao.productsUserPurchased(userCnv.convertUserToUserDto(user));
+//		
+//		//Convert productDtos to products
+//		List<Product>    productsUserPurchased =  new ArrayList<>();
+//		productsUserPurchased = productCnv.convertProductDtosToProducts(productsDtoUserPurchased);
+//		
+//		for ( Product productInArray : productsUserPurchased)
+//		{
+//			 if (productInArray.getId() == product.getId())
+//			 {
+//				 LOGGER.info("hasUserPurchasedThisProduct true");
+//				 return true;
+//			 }
+//		}
+//		LOGGER.info("hasUserPurchasedThisProduct false");
 		return false;
 	}
 

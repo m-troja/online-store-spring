@@ -20,6 +20,8 @@ public class UserForHashTables implements User {
 	private String creditCard;
 	private String partnerCode;
 	private User referrerUser;
+	private boolean isEnabled;
+	private List<Role> roles;
 
 	{
 		id = ++userCounter;
@@ -179,28 +181,27 @@ public class UserForHashTables implements User {
 		return this.referrerUser;
 	}
 
-	@Override
-	public void setRoles(List<Role> convertRoleDtosToRoles) {
-		// TODO Auto-generated method stub
-		
+	public boolean getIsEnabled() {
+		return isEnabled;
 	}
 
-	@Override
+	public void setIsEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	public List<Role> getRoles() {
-		// TODO Auto-generated method stub
-		return null;
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return isEnabled;
 	}
 
-	@Override
-	public void setIsEnabled(boolean isEnabled) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 }

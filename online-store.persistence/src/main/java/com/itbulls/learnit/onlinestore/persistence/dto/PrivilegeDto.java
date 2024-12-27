@@ -4,29 +4,31 @@ import java.util.List;
 
 import javax.annotation.processing.Generated;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity(name = "privilege")
-public class PrivilegeDto 
-{
+public class PrivilegeDto {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	private String name;
-	
-	@ManyToMany(mappedBy =  "privileges")
-	List<RoleDto> roles;
-	
-	public PrivilegeDto() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    private String name;
+    
+    @ManyToMany(mappedBy = "privileges")
+    private List<RoleDto> roles;
+    
+    public PrivilegeDto() {
 	}
-	
-	public PrivilegeDto(String privilegeName) {
+    
+    public PrivilegeDto(String privilegeName) {
     	this.name = privilegeName;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -49,6 +51,11 @@ public class PrivilegeDto
 
 	public void setRoles(List<RoleDto> roles) {
 		this.roles = roles;
+	}
+
+	@Override
+	public String toString() {
+		return "PrivilegeDto [id=" + id + ", name=" + name + "] " ;
 	}
 	
 }

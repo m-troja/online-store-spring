@@ -37,7 +37,6 @@ public class CheckoutController {
 		Product product = productFacade.getProductByGuid(guid);
 		purchaseFacade.createPurchase(user, product);
 		
-		LOGGER.info("Checkout create purchase: success");
 		session.setAttribute("orderStatus", "Thank you for the order. Manager will contact you soon");
 		return "redirect:/product?guid=" + guid;
 	}

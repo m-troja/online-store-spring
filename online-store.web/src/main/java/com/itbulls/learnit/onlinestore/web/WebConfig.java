@@ -8,15 +8,20 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -32,7 +37,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.itbulls.learnit.onlinestore.web.security.DefaultAuthenticationFailureHandler;
+import com.itbulls.learnit.onlinestore.web.security.DefaultAuthenticationProvider;
+import com.itbulls.learnit.onlinestore.web.security.DefaultAuthenticationSuccessHandler;
 import com.itbulls.learnit.onlinestore.web.security.DefaultLogoutSuccessHandler;
+import com.itbulls.learnit.onlinestore.web.security.DefaultUserDetailsService;
 
 @EnableWebSecurity
 @EnableWebMvc
@@ -87,6 +95,12 @@ public class WebConfig implements WebMvcConfigurer {
 	    return new CookieLocaleResolver();
 	}
 	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+	    LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+	    localeChangeInterceptor.setParamName("lang");
+	    registry.addInterceptor(localeChangeInterceptor);
+	}
 //	@Override
 //	public void addInterceptors(InterceptorRegistry registry) {
 //		registry.addInterceptor(new DemoHandlerInterceptor()).addPathPatterns("/test/simple-model-demo");
@@ -96,16 +110,20 @@ public class WebConfig implements WebMvcConfigurer {
 //	}
 
 	
-	@Bean
-	public InMemoryUserDetailsManager userDetailsService() {
-		UserDetails user1 = User.withUsername("user1").password(passwordEncoder().encode("test1")).roles("CUSTOMER")
-				.build();
-		UserDetails user2 = User.withUsername("user2").password(passwordEncoder().encode("test2")).roles("CUSTOMER")
-				.build();
-		UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("root")).roles("ADMIN")
-				.build();
-		return new InMemoryUserDetailsManager(user1, user2, admin);
-	}
+//	@Bean
+//	public InMemoryUserDetailsManager userDetailsService() {
+//		UserDetails user1 = User.withUsername("user1").password(passwordEncoder().encode("test1")).roles("CUSTOMER")
+//				.build();
+//		UserDetails user2 = User.withUsername("user2").password(passwordEncoder().encode("test2")).roles("CUSTOMER")
+//				.build();
+//		UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("root")).roles("ADMIN")
+//				.build();
+//		return new InMemoryUserDetailsManager(user1, user2, admin);
+//	}
+	
+	
+	// ===== Spring Security Configuration
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -115,21 +133,21 @@ public class WebConfig implements WebMvcConfigurer {
     	http.csrf()
 	        .disable()
 	        .authorizeHttpRequests()
-//		        .requestMatchers("/test/admin/**")
-//		        .hasRole("ADMIN")
-//		        .requestMatchers("/test/anonymous*")
-//		        .anonymous()
+		        .requestMatchers("/test/admin/**")
+		        .hasRole("ADMIN")
+		        .requestMatchers("/test/anonymous*")
+		        .anonymous()
 		        .requestMatchers("/signin")
 		        .permitAll()
-//		        .anyRequest()
-//		        .authenticated()
+ 		        .anyRequest()
+ 		        .authenticated()
 	        .and()
 		        .formLogin()
     	        .usernameParameter("email")		
 //		        .passwordParameter("pass") // in case you want to use different parameter 
 		        .loginPage("/signin")
 		        .loginProcessingUrl("/signin")
-		        .defaultSuccessUrl("/homepage", false)
+		        .defaultSuccessUrl("/success-login", false)
 		        .failureUrl("/signin")
 		        .failureHandler(authenticationFailureHandler())
 	        .and()
@@ -138,7 +156,7 @@ public class WebConfig implements WebMvcConfigurer {
 		        .logoutSuccessUrl("/homepage")
 		        .deleteCookies("JSESSIONID")
 		        .logoutSuccessHandler(logoutSuccessHandler());
-    	return http.build();
+    	return http.getOrBuild();
     }
 	
 	@Bean
@@ -149,5 +167,29 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public LogoutSuccessHandler logoutSuccessHandler() {
 		return new DefaultLogoutSuccessHandler();
+	}
+	
+	@Bean
+	public AuthenticationProvider authProvider() {
+		return new DefaultAuthenticationProvider();
+	}
+
+	@Bean
+	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+		AuthenticationManagerBuilder authenticationManagerBuilder = http
+				.getSharedObject(AuthenticationManagerBuilder.class);
+		authenticationManagerBuilder.authenticationProvider(authProvider());
+		return authenticationManagerBuilder.build();
+	}
+	
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new DefaultUserDetailsService();
+	}
+	
+	@Bean
+	public AuthenticationSuccessHandler successHandler() 
+	{
+		return new DefaultAuthenticationSuccessHandler();
 	}
 }

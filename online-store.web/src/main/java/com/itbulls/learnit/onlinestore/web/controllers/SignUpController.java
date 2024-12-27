@@ -1,5 +1,6 @@
 package com.itbulls.learnit.onlinestore.web.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,10 +9,10 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,14 +21,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itbulls.learnit.onlinestore.core.facades.RoleFacade;
 import com.itbulls.learnit.onlinestore.core.facades.UserFacade;
 import com.itbulls.learnit.onlinestore.core.services.Validator;
 import com.itbulls.learnit.onlinestore.core.services.impl.CorePasswordValidator;
+import com.itbulls.learnit.onlinestore.persistence.SetupDataLoader;
+import com.itbulls.learnit.onlinestore.persistence.dao.RoleDao;
 import com.itbulls.learnit.onlinestore.persistence.entities.User;
+import com.itbulls.learnit.onlinestore.persistence.entities.impl.DefaultRole;
 import com.itbulls.learnit.onlinestore.persistence.entities.impl.DefaultUser;
-import com.itbulls.learnit.onlinestore.web.utils.PBKDF2WithHmacSHA1EncryptionService;
 
 @Controller
 @RequestMapping("/signup")
@@ -40,13 +43,16 @@ public class SignUpController {
 	private UserFacade userFacade;
 	
 	@Autowired
+	private RoleFacade roleFacade;
+	
+	@Autowired
 	private Validator passValidator;
 	
 	@Autowired
 	private MessageSource messageSource;
 	
 	@Autowired
-	private PBKDF2WithHmacSHA1EncryptionService encryptionService;
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping
 	public String doGet(Model model)
@@ -58,8 +64,9 @@ public class SignUpController {
 	@PostMapping
 	public String doPost(@Valid @ModelAttribute("user") DefaultUser user, BindingResult br, HttpSession session, HttpServletRequest request,
 			@CookieValue(value = PARTNER_CODE_COOKIE_NAME, defaultValue = "null") String partnerCodeCookie) {
-		String notEncryptedPassword = user.getPassword();
 		
+		String notEncryptedPassword = user.getPassword();
+
 		User userByEmail = userFacade.getUserByEmail(user.getEmail());
 		
 		if (userByEmail != null) {
@@ -78,7 +85,7 @@ public class SignUpController {
 			return "signup";
 		}
 		
-		user.setPassword(encryptionService.generatePasswordWithSaltAndHash(notEncryptedPassword));
+		user.setPassword(passwordEncoder.encode(notEncryptedPassword));
 		
 		List<String> errorMessages = passValidator.validate(notEncryptedPassword);
 		if (errorMessages.size() != 0) {
@@ -100,6 +107,14 @@ public class SignUpController {
 			partnerCode = partnerCodeCookie;
 			LOGGER.info("Partner code {} is found in cookie", partnerCode);
 		}
+		user.setIsEnabled(true);
+		
+		
+		System.out.println();
+		System.out.println("SignUpController: user.getRoleName " + user.getRoleName());
+		System.out.println();
+		
+		
 		
 		userFacade.registerUser(user, partnerCode);
 		LOGGER.info("User with email {} is registered successfully", user.getEmail());

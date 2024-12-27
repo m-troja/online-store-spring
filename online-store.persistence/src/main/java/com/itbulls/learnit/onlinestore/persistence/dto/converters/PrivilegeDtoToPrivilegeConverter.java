@@ -24,9 +24,6 @@ public class PrivilegeDtoToPrivilegeConverter {
 		privilege.setId(privilegeDto.getId());
 		privilege.setName(privilegeDto.getName());
 		
-		List<RoleDto> roleDtos = privilegeDto.getRoles();
-		List<Role> roles = roleCnv.convertRoleDtosToRoles(roleDtos);
-		privilege.setRoles(roles);
 		
 		return privilege;
 	}
@@ -38,7 +35,6 @@ public class PrivilegeDtoToPrivilegeConverter {
 		{
 			privileges.add(convertPrivilegeDtoToPrivilege(privilegeDto));
 		}
-		
 		return privileges;
 	}
 	

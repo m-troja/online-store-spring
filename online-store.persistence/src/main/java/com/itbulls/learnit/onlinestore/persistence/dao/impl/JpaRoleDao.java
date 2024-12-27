@@ -15,82 +15,77 @@ import javax.persistence.TypedQuery;
 
 @Repository
 public class JpaRoleDao implements RoleDao {
-	public final Logger LOGGER = LogManager.getLogger(JpaRoleDao.class);
 
-	EntityManagerFactory emf = null;
-	EntityManager em = null;
-	
 	@Override
 	public RoleDto getRoleById(int id) {
-		try 
-		{ 	 
+		EntityManagerFactory emf = null;
+		EntityManager em = null;
+		try {
+
 			emf = Persistence.createEntityManagerFactory("persistence-unit");
 			em = emf.createEntityManager();
-			
 			em.getTransaction().begin();
-			
 			RoleDto role = em.find(RoleDto.class, id);
-			LOGGER.info("JpaJdbcRoleDao getRoleById " + id);
 			em.getTransaction().commit();
-			
 			return role;
-}
-		
-		finally 
-		{
-			if (emf !=null )
-			{
+		} finally {
+			if (emf != null) {
 				emf.close();
 			}
-			
-			if (em !=null )
-			{
+			if (em != null) {
 				em.close();
 			}
 		}
-		
+
 	}
 
 	@Override
 	public RoleDto getRoleByRoleName(String roleName) {
-		try 
-		{ 	 
+		EntityManagerFactory emf = null;
+		EntityManager em = null;
+		try {
 			emf = Persistence.createEntityManagerFactory("persistence-unit");
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
-			
-			TypedQuery<RoleDto> query = em.createQuery("SELECT r FROM role r WHERE r.name = :roleName", RoleDto.class);
+			TypedQuery<RoleDto> query = em.createQuery("SELECT r FROM role r WHERE r.roleName = :roleName", RoleDto.class);
 			query.setParameter("roleName", roleName);
-			LOGGER.info("SELECT r FROM role r WHERE r.name = " + roleName);
-			RoleDto role = query.getSingleResult();
-			
+			RoleDto roleDto = query.getResultList().stream().findFirst().orElse(null);
 			em.getTransaction().commit();
-			
-			return role;
-		}
-		
-		finally 
-		{
-			if (emf !=null )
-			{
+			System.out.println(" ");
+			System.out.println("JpaRoleDao getRoleByRoleName roleDto.toString: " + roleDto.toString());
+			System.out.println(" ");
+			return roleDto;
+		} finally {
+			if (emf != null) {
 				emf.close();
 			}
-			
-			if (em !=null )
-			{
+			if (em != null) {
 				em.close();
 			}
 		}
-		
 	}
-	
-	public void save(RoleDto role)
-	{
-		emf = Persistence.createEntityManagerFactory("persistence-unit");
-		em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(role);
-		em.getTransaction().commit();
-	}
-}
 
+	@Override
+	public void save(RoleDto role) {
+		EntityManagerFactory emf = null;
+		EntityManager em = null;
+		try {
+			emf = Persistence.createEntityManagerFactory("persistence-unit");
+			em = emf.createEntityManager();
+			em.getTransaction().begin();
+			em.persist(role);
+			em.getTransaction().commit();
+			System.out.println("");
+			System.out.println("JpaRoleDao save, Role saved: " + role.toString());
+			System.out.println("");
+		} finally {
+			if (emf != null) {
+				emf.close();
+			}
+			if (em != null) {
+				em.close();
+			}
+		}
+	}
+
+}

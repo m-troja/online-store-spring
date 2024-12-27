@@ -15,7 +15,7 @@ import com.itbulls.learnit.onlinestore.persistence.entities.impl.DefaultUser;
 public class UserDtoToUserConverter {
 	
 	@Autowired
-	private RoleDtoToRoleConverter roleConverter;
+	private RoleDtoToRoleConverter roleCnv;
 	
 
 	public UserDto convertUserIdToUserDtoWithOnlyId(int customerId) {
@@ -34,18 +34,21 @@ public class UserDtoToUserConverter {
 		user.setId(userDto.getId());
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
-		if (userDto.getRoleDto() != null) 
-			user.setRoleName(userDto.getRoleDto().getRoleName());
+		user.setRoles(roleCnv.convertRoleDtosToRoles(userDto.getRoles()));
 		user.setMoney(userDto.getMoney().doubleValue());
 		user.setCreditCard(userDto.getCreditCard());
 		user.setPartnerCode(userDto.getPartnerCode());
 		user.setReferrerUser(convertUserDtoToUser(userDto.getReferrerUser()));
+		user.setIsEnabled(userDto.isEnabled());
 		
+		System.out.println();
+		System.out.println("convertUserToUserDto: user.getRoleName " + user.getRoleName());
+		System.out.println();
+
 		return user;
 	}
 	
 	public UserDto convertUserToUserDto(User user) {
-		roleConverter = new RoleDtoToRoleConverter();
 		UserDto userDto = null;
 		if (user != null) {
 			userDto = new UserDto();
@@ -54,11 +57,20 @@ public class UserDtoToUserConverter {
 			userDto.setFirstName(user.getFirstName());
 			userDto.setLastName(user.getLastName());
 			userDto.setPassword(user.getPassword());
-			userDto.setRoleDto(roleConverter.convertRoleNameToRoleDtoWithOnlyRoleName(user.getRoleName()));
+			userDto.setRoles(roleCnv.convertRolesToRoleDtos(user.getRoles()));
 			userDto.setMoney(BigDecimal.valueOf(user.getMoney()));
 			userDto.setCreditCard(user.getCreditCard());
 			userDto.setPartnerCode(user.getPartnerCode());
 			userDto.setReferrerUser(convertUserToUserDto(user.getReferrerUser()));
+			userDto.setIsEnabled(user.isEnabled());
+			System.out.println();
+			System.out.println("convertUserToUserDto: user.getRoles " + user.getRoles());
+			System.out.println("convertUserToUserDto: roleCnv.convertRolesToRoleDtos(user.getRoles) " + roleCnv.convertRolesToRoleDtos(user.getRoles()));
+			System.out.println("convertUserToUserDto: user.getRole().toString " + user.getRoles().toString());
+			System.out.println("convertUserToUserDto: userDto.getRoles " + userDto.getRoles());
+			System.out.println("convertUserToUserDto: user.getRole().toString " + userDto.getRoles().toString());
+			System.out.println();
+
 		}
 		return userDto;
 	}

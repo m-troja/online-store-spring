@@ -26,13 +26,18 @@ public class JpaUserDao implements UserDao {
 	@Override
 	public boolean saveUser(UserDto user) {
 		try 
-		{ 	 
+		{ 	 			
 			emf = Persistence.createEntityManagerFactory("persistence-unit");
 			em = emf.createEntityManager();
 			em.getTransaction().begin();
-			LOGGER.info("User merged");
+			System.out.println(" ");
+			System.out.println("JpaUserDao: userDto.setIsEnabled = " + user.isEnabled()  );
+			System.out.println("JpaUserDao: user.getRoles().toString = " + user.getRoles().toString());
+			System.out.println(" ");
+
 			em.merge(user);
-			
+			LOGGER.info("User merged");
+
 			em.getTransaction().commit();
 			return true;
 		}

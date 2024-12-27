@@ -28,4 +28,10 @@ public class DefaultPrivilege implements Privilege {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	
+	@Override
+	public String toString() {
+		return "PrivilegeDto [id=" + id + ", name=" + name + "] " ;
+	}
+
 }

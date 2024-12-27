@@ -17,7 +17,7 @@ import com.itbulls.learnit.onlinestore.web.controllers.SignInController;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServlet;
 
-@WebFilter(urlPatterns = {"/management-fulfilment", "/management-orders", "/admin/*"})
+@WebFilter(urlPatterns = {"/management-fulfilment", "/management-orders"})
 public class AdminFilter implements javax.servlet.Filter {
 
 	@Override

@@ -13,10 +13,15 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 public class DefaultAuthenticationFailureHandler implements AuthenticationFailureHandler 
 {
+	public static final String UNSUCCESFUL_LOGIN_COUNT_ATTR_KEY = "UNSUCCESSFUL_LOGIN_COUNT";
+	private static final int LOGIN_FAILURE_ATTEMPTS_LIMIT = 3;
+	
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException 
 	{
+		
+		
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		
 		StringBuilder sb = new StringBuilder();
